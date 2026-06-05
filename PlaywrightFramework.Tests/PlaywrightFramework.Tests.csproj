@@ -25,5 +25,10 @@
   <ItemGroup>
     <ProjectReference Include="..\PlaywrightFramework.Core\PlaywrightFramework.Core.csproj" />
   </ItemGroup>
-
+  <Target Name="PlaywrightInstall" AfterTargets="Build">
+  <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(OutDir)playwright.ps1&quot; install"
+        Condition="'$(OS)' == 'Windows_NT'" />
+  <Exec Command="&quot;$(OutDir)playwright.sh&quot; install"
+        Condition="'$(OS)' != 'Windows_NT'" />
+  </Target>
 </Project>
